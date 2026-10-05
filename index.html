@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ski Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0b1d2a;
+        color: #fff;
+    }
+
+    header {
+        background: url('https://images.unsplash.com/photo-1518173946687-a4c8892bbd1f?auto=format&fit=crop&w=1400&q=60')
+            center/cover no-repeat;
+        padding: 60px 20px;
+        text-align: center;
+        color: #fff;
+        text-shadow: 0 0 10px #000;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin: 0;
+    }
+
+    .section {
+        padding: 20px;
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    .card {
+        background: #122b3b;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 10px #000;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+    }
+
+    a {
+        color: #7cc7ff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .webcam-img {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .travel-link {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 12px;
+        background: #1e4a63;
+        border-radius: 6px;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Colorado Ski Dashboard</h1>
+    <p>Snow • Weather • Webcams • Travel Times</p>
+</header>
+
+<div class="section">
+
+    <!-- Snowfall Section -->
+    <div class="card">
+        <h2>❄️ Snowfall & Conditions</h2>
+        <p>Daily and weekly snowfall totals for each resort.</p>
+
+        <table width="100%">
+            <tr><th align="left">Resort</th><th align="left">Daily Snow</th><th align="left">7‑Day Total</th><th align="left">Base Depth</th></tr>
+            <tr><td>Copper Mountain</td><td id="snow-copper">–</td><td id="snow7-copper">–</td><td id="base-copper">–</td></tr>
+            <tr><td>Arapahoe Basin</td><td id="snow-abasin">–</td><td id="snow7-abasin">–</td><td id="base-abasin">–</td></tr>
+            <tr><td>Eldora</td><td id="snow-eldora">–</td><td id="snow7-eldora">–</td><td id="base-eldora">–</td></tr>
+            <tr><td>Winter Park</td><td id="snow-wp">–</td><td id="snow7-wp">–</td><td id="base-wp">–</td></tr>
+        </table>
+    </div>
+
+    <!-- Weather Section -->
+    <div class="card">
+        <h2>🌨️ Weather Forecast</h2>
+        <div class="grid" id="weather-grid">
+            <!-- Weather cards will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Webcams Section -->
+    <div class="card">
+        <h2>🎥 Live Webcams</h2>
+        <div class="grid">
+            <div>
+                <img class="webcam-img" src="https://www.coppercolorado.com/sites/default/files/2020-11/Copper-Mountain-Webcam.jpg" alt="">
+                <a href="https://www.coppercolorado.com/the-mountain/webcams" target="_blank">Copper Mountain Webcams</a>
+            </div>
+            <div>
+                <img class="webcam-img" src="https://www.arapahoebasin.com/globalassets/webcams/webcam-lenawee.jpg" alt="">
+                <a href="https://www.arapahoebasin.com/webcams/" target="_blank">Arapahoe Basin Webcams</a>
+            </div>
+            <div>
+                <img class="webcam-img" src="https://eldora.com/sites/default/files/2020-12/Eldora-Webcam.jpg" alt="">
+                <a href="https://eldora.com/mountain/webcams" target="_blank">Eldora Webcams</a>
+            </div>
+            <div>
+                <img class="webcam-img" src="https://www.winterparkresort.com/-/media/winter-park/webcams/panoramic.ashx" alt="">
+                <a href="https://www.winterparkresort.com/the-mountain/webcams" target="_blank">Winter Park Webcams</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Travel Times Section -->
+    <div class="card">
+        <h2>🚗 Travel Times from 12615 Hazel Ct, Broomfield</h2>
+
+        <div class="grid">
+            <div>
+                <h3>Copper Mountain</h3>
+                <a class="travel-link" target="_blank"
+                   href="https://maps.google.com/?saddr=12615+Hazel+Ct+Broomfield+CO&daddr=Copper+Mountain+CO">
+                   View Route
+                </a>
+            </div>
+
+            <div>
+                <h3>Arapahoe Basin</h3>
+                <a class="travel-link" target="_blank"
+                   href="https://maps.google.com/?saddr=12615+Hazel+Ct+Broomfield+CO&daddr=Arapahoe+Basin+CO">
+                   View Route
+                </a>
+            </div>
+
+            <div>
+                <h3>Eldora</h3>
+                <a class="travel-link" target="_blank"
+                   href="https://maps.google.com/?saddr=12615+Hazel+Ct+Broomfield+CO&daddr=Eldora+Mountain+Resort">
+                   View Route
+                </a>
+            </div>
+
+            <div>
+                <h3>Winter Park</h3>
+                <a class="travel-link" target="_blank"
+                   href="https://maps.google.com/?saddr=12615+Hazel+Ct+Broomfield+CO&daddr=Winter+Park+Resort">
+                   View Route
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// Placeholder for future API integration
+// You can add OpenWeather, resort snow APIs, etc.
+</script>
+
+</body>
+</html>
