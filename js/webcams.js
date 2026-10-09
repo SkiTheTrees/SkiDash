@@ -1,4 +1,3 @@
-// SnowSure public REST resort IDs
 const snowSureResorts = {
   copper: "copper-mountain",
   abasin: "arapahoe-basin",
@@ -6,7 +5,6 @@ const snowSureResorts = {
   winterpark: "winter-park"
 };
 
-// Fetch webcams from SnowSure REST API (no key needed)
 async function fetchWebcams(resortId) {
   const url = `https://api.snowsure.com/v1/public/resorts/${resortId}/webcams`;
 
@@ -19,7 +17,6 @@ async function fetchWebcams(resortId) {
   return await response.json();
 }
 
-// Auto-refresh webcam thumbnails
 function autoRefreshWebcam(id, url, interval = 60000) {
   const img = document.getElementById(id);
   if (!img) return;
@@ -32,7 +29,6 @@ function autoRefreshWebcam(id, url, interval = 60000) {
   setInterval(refresh, interval);
 }
 
-// Render webcams into your dashboard
 async function renderWebcams() {
   for (const key of Object.keys(snowSureResorts)) {
     const resortId = snowSureResorts[key];
@@ -41,13 +37,14 @@ async function renderWebcams() {
       const data = await fetchWebcams(resortId);
       if (!data || !data.webcams || data.webcams.length === 0) continue;
 
-      // Use the first webcam for each resort
       const cam = data.webcams[0];
 
-      const thumb = cam.thumbnail_url;
-      const refreshMs = (cam.refresh_interval_seconds || 60) * 1000;
+      autoRefreshWebcam(`cam-${key}`, cam.thumbnail_url, cam.refresh_interval_seconds * 1000);
 
-      autoRefreshWebcam(`cam-${key}`, thumb, refreshMs);
+      document.getElementById(`camname-${key}`).textContent = cam.name || "Webcam";
+      document.getElementById(`camloc-${key}`).textContent = cam.location || "Location unknown";
+      document.getElementById(`camupdated-${key}`).textContent =
+        "Updated: " + new Date().toLocaleTimeString();
 
     } catch (err) {
       console.error(`Error loading webcams for ${key}:`, err);
