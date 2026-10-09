@@ -1,5 +1,5 @@
 const webcamUrls = {
-  copper: "https://www.coppercolorado.com/sites/default/files/2020-11/Copper-Mountain-Webcam.jpg",
+  copper: "https://b16.hdrelay.com/camera/fb469125-f1f3-459f-aeb4-98cb674e395f/snapshot",
   abasin: "https://www.arapahoebasin.com/globalassets/webcams/webcam-lenawee.jpg",
   eldora: "https://eldora.com/sites/default/files/2020-12/Eldora-Webcam.jpg",
   winterpark: "https://www.winterparkresort.com/-/media/winter-park/webcams/panoramic.ashx"
