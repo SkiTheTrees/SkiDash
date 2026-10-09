@@ -6,10 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
-  <header>
-    <h1>Colorado Ski Dashboard</h1>
-    <p>Snow • Weather • Webcams • Travel Times</p>
+
+  <header class="hero">
+    <div class="hero-overlay">
+      <h1>Colorado Ski Dashboard</h1>
+      <p class="tagline">Snow • Weather • Webcams • Travel Times</p>
+    </div>
   </header>
 
   <main class="section">
@@ -51,32 +55,32 @@
     <!-- Weather -->
     <section class="card">
       <h2>🌨️ Weather Forecast</h2>
-      <div id="weather-grid" class="grid"></div>
+      <div id="weather-grid" class="grid weather-grid"></div>
     </section>
 
     <!-- Webcams -->
     <section class="card">
       <h2>🎥 Live Webcams</h2>
       <div class="grid">
-        <div>
+        <div class="webcam-card">
           <img id="cam-copper" class="webcam-img" src="" alt="Copper webcam">
           <a href="https://www.coppercolorado.com/the-mountain/webcams" target="_blank">
             Copper Mountain Webcams
           </a>
         </div>
-        <div>
+        <div class="webcam-card">
           <img id="cam-abasin" class="webcam-img" src="" alt="A‑Basin webcam">
-          <a href="https://www.arapahoebasin.com/mountain-cams/" target="_blank">
+          <a href="https://www.arapahoebasin.com/webcams/" target="_blank">
             Arapahoe Basin Webcams
           </a>
         </div>
-        <div>
+        <div class="webcam-card">
           <img id="cam-eldora" class="webcam-img" src="" alt="Eldora webcam">
           <a href="https://eldora.com/mountain/webcams" target="_blank">
             Eldora Webcams
           </a>
         </div>
-        <div>
+        <div class="webcam-card">
           <img id="cam-winterpark" class="webcam-img" src="" alt="Winter Park webcam">
           <a href="https://www.winterparkresort.com/the-mountain/webcams" target="_blank">
             Winter Park Webcams
@@ -89,7 +93,7 @@
     <section class="card">
       <h2>🚗 Travel Times from 12615 Hazel Ct, Broomfield</h2>
       <div class="grid">
-        <div>
+        <div class="travel-card">
           <h3>Copper Mountain</h3>
           <p id="travel-copper">–</p>
           <a class="travel-link" target="_blank"
@@ -97,7 +101,7 @@
              View Route
           </a>
         </div>
-        <div>
+        <div class="travel-card">
           <h3>Arapahoe Basin</h3>
           <p id="travel-abasin">–</p>
           <a class="travel-link" target="_blank"
@@ -105,7 +109,7 @@
              View Route
           </a>
         </div>
-        <div>
+        <div class="travel-card">
           <h3>Eldora</h3>
           <p id="travel-eldora">–</p>
           <a class="travel-link" target="_blank"
@@ -113,7 +117,7 @@
              View Route
           </a>
         </div>
-        <div>
+        <div class="travel-card">
           <h3>Winter Park</h3>
           <p id="travel-wp">–</p>
           <a class="travel-link" target="_blank"
@@ -130,5 +134,6 @@
   <script src="js/weather.js"></script>
   <script src="js/webcams.js"></script>
   <script src="js/travel.js"></script>
+
 </body>
 </html>
