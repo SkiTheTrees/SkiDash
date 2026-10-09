@@ -1,29 +1,44 @@
-// TODO: connect to a real ski conditions API.
-// For now, just mock some values.
-
-const snowfallData = {
-  copper: { daily: "4 in", weekly: "18 in", base: "65 in" },
-  abasin: { daily: "6 in", weekly: "22 in", base: "70 in" },
-  eldora: { daily: "2 in", weekly: "10 in", base: "50 in" },
-  winterpark: { daily: "5 in", weekly: "20 in", base: "60 in" }
+const snowSureResorts = {
+  copper: "copper-mountain",
+  abasin: "arapahoe-basin",
+  eldora: "eldora",
+  winterpark: "winter-park"
 };
 
-function renderSnowfall() {
-  document.getElementById("snow-copper").textContent = snowfallData.copper.daily;
-  document.getElementById("snow7-copper").textContent = snowfallData.copper.weekly;
-  document.getElementById("base-copper").textContent = snowfallData.copper.base;
+// Fetch snowfall from SnowSure REST API (no key needed)
+async function fetchSnowSure(resortId) {
+  const url = `https://api.snowsure.com/v1/public/resorts/${resortId}/snow`;
 
-  document.getElementById("snow-abasin").textContent = snowfallData.abasin.daily;
-  document.getElementById("snow7-abasin").textContent = snowfallData.abasin.weekly;
-  document.getElementById("base-abasin").textContent = snowfallData.abasin.base;
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.error("SnowSure API error:", response.status);
+    return null;
+  }
 
-  document.getElementById("snow-eldora").textContent = snowfallData.eldora.daily;
-  document.getElementById("snow7-eldora").textContent = snowfallData.eldora.weekly;
-  document.getElementById("base-eldora").textContent = snowfallData.eldora.base;
+  return await response.json();
+}
 
-  document.getElementById("snow-wp").textContent = snowfallData.winterpark.daily;
-  document.getElementById("snow7-wp").textContent = snowfallData.winterpark.weekly;
-  document.getElementById("base-wp").textContent = snowfallData.winterpark.base;
+async function renderSnowfall() {
+  for (const key of Object.keys(snowSureResorts)) {
+    const resortId = snowSureResorts[key];
+
+    try {
+      const data = await fetchSnowSure(resortId);
+      if (!data) continue;
+
+      document.getElementById(`snow24-${key}`).textContent = `${data.snowfall_24h} in`;
+      document.getElementById(`snow48-${key}`).textContent = `${data.snowfall_48h} in`;
+      document.getElementById(`snow72-${key}`).textContent = `${data.snowfall_72h} in`;
+      document.getElementById(`snow7-${key}`).textContent = `${data.snowfall_7d} in`;
+      document.getElementById(`snowseason-${key}`).textContent = `${data.snowfall_season} in`;
+
+      document.getElementById(`baseupper-${key}`).textContent = `${data.base_depth_upper} in`;
+      document.getElementById(`baselower-${key}`).textContent = `${data.base_depth_lower} in`;
+
+    } catch (err) {
+      console.error(`Error loading snowfall for ${key}:`, err);
+    }
+  }
 }
 
 renderSnowfall();
