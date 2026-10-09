@@ -1,11 +1,26 @@
-const webcamUrls = {
-  copper: "https://b16.hdrelay.com/camera/fb469125-f1f3-459f-aeb4-98cb674e395f/snapshot",
-  abasin: "https://www.arapahoebasin.com/globalassets/webcams/webcam-lenawee.jpg",
-  eldora: "https://eldora.com/sites/default/files/2020-12/Eldora-Webcam.jpg",
-  winterpark: "https://www.winterparkresort.com/-/media/winter-park/webcams/panoramic.ashx"
+// SnowSure public REST resort IDs
+const snowSureResorts = {
+  copper: "copper-mountain",
+  abasin: "arapahoe-basin",
+  eldora: "eldora",
+  winterpark: "winter-park"
 };
 
-function autoRefreshWebcam(id, url) {
+// Fetch webcams from SnowSure REST API (no key needed)
+async function fetchWebcams(resortId) {
+  const url = `https://api.snowsure.com/v1/public/resorts/${resortId}/webcams`;
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.error("SnowSure webcam API error:", response.status);
+    return null;
+  }
+
+  return await response.json();
+}
+
+// Auto-refresh webcam thumbnails
+function autoRefreshWebcam(id, url, interval = 60000) {
   const img = document.getElementById(id);
   if (!img) return;
 
@@ -14,10 +29,30 @@ function autoRefreshWebcam(id, url) {
   };
 
   refresh();
-  setInterval(refresh, 60000); // every 60s
+  setInterval(refresh, interval);
 }
 
-autoRefreshWebcam("cam-copper", webcamUrls.copper);
-autoRefreshWebcam("cam-abasin", webcamUrls.abasin);
-autoRefreshWebcam("cam-eldora", webcamUrls.eldora);
-autoRefreshWebcam("cam-winterpark", webcamUrls.winterpark);
+// Render webcams into your dashboard
+async function renderWebcams() {
+  for (const key of Object.keys(snowSureResorts)) {
+    const resortId = snowSureResorts[key];
+
+    try {
+      const data = await fetchWebcams(resortId);
+      if (!data || !data.webcams || data.webcams.length === 0) continue;
+
+      // Use the first webcam for each resort
+      const cam = data.webcams[0];
+
+      const thumb = cam.thumbnail_url;
+      const refreshMs = (cam.refresh_interval_seconds || 60) * 1000;
+
+      autoRefreshWebcam(`cam-${key}`, thumb, refreshMs);
+
+    } catch (err) {
+      console.error(`Error loading webcams for ${key}:`, err);
+    }
+  }
+}
+
+renderWebcams();
