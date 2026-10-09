@@ -5,7 +5,6 @@ const snowSureResorts = {
   winterpark: "winter-park"
 };
 
-// Fetch snowfall from SnowSure REST API (no key needed)
 async function fetchSnowSure(resortId) {
   const url = `https://api.snowsure.com/v1/public/resorts/${resortId}/snow`;
 
